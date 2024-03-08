@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #b58c67;
+}
+
+body {
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0d0d0d;
+  border: 2px solid #777;
+  border-radius: 20px;
+}
