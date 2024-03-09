@@ -3,15 +3,17 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import UserProvider from "./Context/User.context.jsx";
-import Login from "./pages/Login/index.jsx";
-import Signup from "./pages/Signup/index.jsx";
-import ForgetPassword from "./pages/ForgetPassword/index.jsx";
-import CreateNewPassword from "./pages/CreateNewPassword/index.jsx";
-import ProtectedRoute from "./Components/ProtectedRoute/index.jsx";
-import Customers from "./pages/Customers/index.jsx";
-import Requests from "./pages/Requests/index.jsx";
-import Dashboard from "./Components/Dashboard/index.jsx";
+import { Notifications } from "@mantine/notifications";
+import UserProvider from "../Context/User.context.jsx";
+import Login from "../pages/Login/login.jsx";
+import Signup from "../pages/Signup/signup.jsx";
+import ForgetPassword from "../pages/ForgetPassword/forgetPassword.jsx";
+import CreateNewPassword from "../pages/CreateNewPassword/index.jsx";
+import ProtectedRoute from "../Components/ProtectedRoute/index.jsx";
+import Customers from "../pages/Customers/Customers.jsx";
+import Requests from "../pages/Requests/requestes.jsx";
+import Dashboard from "../Components/Dashboard/index.jsx";
+import { MantineProvider } from "@mantine/core";
 
 function App() {
   const routes = createBrowserRouter([
@@ -39,9 +41,12 @@ function App() {
   ]);
 
   return (
-    <UserProvider>
-      <RouterProvider router={routes}></RouterProvider>
-    </UserProvider>
+    <MantineProvider>
+      <Notifications />
+      <UserProvider>
+        <RouterProvider router={routes}></RouterProvider>
+      </UserProvider>
+    </MantineProvider>
   );
 }
 

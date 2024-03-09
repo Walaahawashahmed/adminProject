@@ -1,6 +1,3 @@
-import React  from "react";
-
-
 import {
   ActiveMembers,
   Card,
@@ -37,7 +34,6 @@ export default function Customers() {
     { value: "status", label: "Sort by: status" },
   ];
 
- 
   return (
     <>
       <Container>
