@@ -26,14 +26,51 @@ import member5 from "../../assets/members/5.png";
 import Select from "react-select";
 
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { getLocalStorage } from "../../Services/LocalStorage";
 
 export default function Customers() {
+  const [query, setQuery] = useState("");
+  const [isError, setIsError] = useState({
+    status: false,
+    message: "",
+    code: 0,
+  });
+  const [data, setData] = useState([]);
+  const userToken = getLocalStorage("userToken");
   const options = [
     { value: "customers", label: "Sort by: Customers" },
     { value: "country", label: "Sort by: Country" },
     { value: "status", label: "Sort by: status" },
   ];
 
+  async function searchUser() {
+    try {
+      const response = await axios.get(
+        `http://localhost:3011/admin/searchUserByName/${query}`,
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      console.log(response.data.users);
+      setData(response.data.users);
+      setIsError({ status: false, message: "", code: 0 });
+    } catch (err) {
+      console.log(err);
+      setIsError({
+        status: true,
+        message: err.response.data.msg,
+        code: err.response.status,
+      });
+    }
+  }
+  useEffect(() => {
+    // debounce the search and clean up after unmount
+    const timeout = setTimeout(() => {
+      searchUser();
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [query]);
   return (
     <>
       <Container>
@@ -192,7 +229,15 @@ export default function Customers() {
                   />
                 </svg>
 
-                <input type="text" placeholder="Search" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.currentTarget.value);
+                    console.log(query);
+                  }}
+                />
               </InputContainer>
 
               <Select
@@ -206,20 +251,35 @@ export default function Customers() {
               />
             </Options>
           </header>
-          <CustomerTable>
-            <thead>
-              <tr>
-                <th>Customer Name</th>
-                <th>Business</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Country</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+          {isError.status && isError.code === 404 ? (
+            <div>
+              <h3>{isError.message}</h3>
+            </div>
+          ) : (
+            <CustomerTable>
+              <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr>
+              <tbody>
+                {data.map((users) => (
+                  <Users
+                    key={users._id}
+                    userName={users.name}
+                    email={users.email}
+                    phone={users.phone}
+                    role={users.role}
+                    country={users.country}
+                  />
+                ))}
+
+                {/* <tr>
                 <td>Jane Cooper</td>
                 <td>Food</td>
                 <td>0101111111111111</td>
@@ -327,10 +387,12 @@ export default function Customers() {
                 <td>
                   <span className="status active">Inactive</span>
                 </td>
-              </tr>
-            </tbody>
-          </CustomerTable>
-          <Footer>
+              </tr> */}
+              </tbody>
+            </CustomerTable>
+          )}
+
+          {/* <Footer>
             <p>
               Showing data <span className="start">1</span> to{" "}
               <span className="end">8</span> of{" "}
@@ -375,9 +437,24 @@ export default function Customers() {
                 </svg>
               </Link>
             </Pagination>
-          </Footer>
+          </Footer> */}
         </CustomerContainer>
       </Container>
     </>
+  );
+}
+
+// eslint-disable-next-line react/prop-types
+function Users({ userName, email, phone, role, country }) {
+  return (
+    <tr>
+      <td>{userName}</td>
+      <td>{email}</td>
+      <td>{phone}</td>
+      <td>{role}</td>
+      <td>
+        <span className="status active">Active</span>
+      </td>
+    </tr>
   );
 }
