@@ -45,8 +45,8 @@ export default function ForgetPassword() {
           <MediaHalf>
             <Image src={imageSrc}></Image>
             <Paragraph>
-              You don't build a business, you build the people, then people
-              build the business.
+              You dont build a business, you build the people, then people build
+              the business.
             </Paragraph>
           </MediaHalf>
         </Container>

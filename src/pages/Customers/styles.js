@@ -43,6 +43,13 @@ export const InputContainer = styled.div`
       font-size: 16px;
     }
   }
+  .backButton {
+    cursor: pointer;
+    display: flex;
+  }
+  .backButton:hover {
+    padding: 1px;
+  }
 `;
 
 export const customStyles = {
@@ -211,6 +218,11 @@ export const CustomerTable = styled.table`
 
   th {
     font-weight: 400;
+  }
+
+  .link:hover {
+    text-decoration: underline #b58c67;
+    cursor: pointer;
   }
 
   th:last-child {

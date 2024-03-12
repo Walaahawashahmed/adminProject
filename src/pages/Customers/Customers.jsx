@@ -1,6 +1,3 @@
-import React  from "react";
-
-
 import {
   ActiveMembers,
   Card,
@@ -8,12 +5,12 @@ import {
   Content,
   CustomerContainer,
   CustomerTable,
-  Footer,
+  // Footer,
   Header,
   Icon,
   InputContainer,
   Options,
-  Pagination,
+  // Pagination,
   Statistics,
   customStyles,
 } from "./styles";
@@ -28,22 +25,77 @@ import member5 from "../../assets/members/5.png";
 
 import Select from "react-select";
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { getLocalStorage } from "../../Services/LocalStorage";
 
 export default function Customers() {
+  const [query, setQuery] = useState("");
+  const [isError, setIsError] = useState({
+    status: false,
+    message: "",
+    code: 0,
+  });
+  const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [active, setActive] = useState(false);
+  const userToken = getLocalStorage("userToken");
   const options = [
     { value: "customers", label: "Sort by: Customers" },
     { value: "country", label: "Sort by: Country" },
     { value: "status", label: "Sort by: status" },
   ];
 
- 
+  async function handelUser(e) {
+    e.preventDefault();
+    const name = e.currentTarget.innerText;
+    const user = data.filter((user) => user.email === name);
+    try {
+      const respone = await axios.get(
+        `http://localhost:3011/admin/activities/${user[0]._id}`,
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      setData2(respone.data.activities);
+      console.log(data2);
+      setActive(true);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function searchUser() {
+    try {
+      const response = await axios.get(
+        `http://localhost:3011/admin/searchUserByName/${query}`,
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      console.log(response.data.users);
+      setData(response.data.users);
+      setIsError({ status: false, message: "", code: 0 });
+    } catch (err) {
+      console.log(err);
+      setIsError({
+        status: true,
+        message: err.response.data.msg,
+        code: err.response.status,
+      });
+    }
+  }
+  useEffect(() => {
+    // debounce the search and clean up after unmount
+    const timeout = setTimeout(() => {
+      searchUser();
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [query]);
   return (
     <>
       <Container>
         <Header>
-          <h2>Hello Walaa 👋🏻,</h2>
-          <InputContainer>
+          <h2>Hello Admin 👋🏻,</h2>
+          {/* <InputContainer>
             <svg
               width="24"
               height="24"
@@ -68,7 +120,7 @@ export default function Customers() {
             </svg>
 
             <input type="text" placeholder="Search" />
-          </InputContainer>
+          </InputContainer> */}
         </Header>
         <Statistics>
           <Card>
@@ -164,66 +216,151 @@ export default function Customers() {
             </Content>
           </Card>
         </Statistics>
-        <CustomerContainer>
-          <header>
-            <div className="title">
-              <h2>All Customers</h2>
-              <h3>Active Members</h3>
-            </div>
+        {active ? (
+          <CustomerContainer>
+            <header>
+              <div className="title">
+                <h2>Activity</h2>
+                <h3>{data2[0].userID.name}</h3>
+              </div>
 
-            <Options>
-              <InputContainer>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
-                    stroke="#7E7E7E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M21 21L16.65 16.65"
-                    stroke="#7E7E7E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                <input type="text" placeholder="Search" />
+              <InputContainer
+                style={{ marginRight: "30px" }}
+                onClick={() => setActive(false)}
+              >
+                <div className="backButton">
+                  <svg
+                    className="backIcon"
+                    height="35px"
+                    version="1.1"
+                    viewBox="0 0 256 256"
+                    width="35px"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ marginRight: "5px" }}
+                  >
+                    <path d="M149.974,191.146c-1.638,0-3.276-0.625-4.524-1.875l-56.748-56.746c-2.5-2.499-2.5-6.552,0-9.05l56.748-56.747  c2.496-2.5,6.553-2.5,9.049,0c2.5,2.499,2.5,6.552,0,9.05L102.278,128l52.22,52.222c2.5,2.499,2.5,6.552,0,9.05  C153.25,190.521,151.611,191.146,149.974,191.146z M256,128C256,57.42,198.58,0,128,0C57.42,0,0,57.42,0,128  c0,70.58,57.42,128,128,128C198.58,256,256,198.58,256,128z M243.2,128c0,63.521-51.679,115.2-115.2,115.2  c-63.522,0-115.2-51.679-115.2-115.2C12.8,64.478,64.478,12.8,128,12.8C191.521,12.8,243.2,64.478,243.2,128z" />
+                  </svg>
+                  <h3 className="back" style={{ paddingTop: "6px" }}>
+                    Back
+                  </h3>
+                </div>
               </InputContainer>
+            </header>
+            {isError.status && isError.code === 404 ? (
+              <div>
+                <h3>{isError.message}</h3>
+              </div>
+            ) : (
+              <CustomerTable>
+                <thead>
+                  <tr>
+                    <th>User Name</th>
+                    <th>Activity Type</th>
+                    <th>Details</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
 
-              <Select
-                options={options}
-                defaultValue={{
-                  value: "customers",
-                  label: "Sort by: Customers",
-                }}
-                styles={customStyles}
-                components={{ IndicatorSeparator: () => null }}
-              />
-            </Options>
-          </header>
-          <CustomerTable>
-            <thead>
-              <tr>
-                <th>Customer Name</th>
-                <th>Business</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Country</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+                <tbody>
+                  {data2.map((activity) => (
+                    <Activity
+                      key={activity._id}
+                      userName={activity.userID.name}
+                      activityType={activity.activityType}
+                      details={activity.details}
+                      time={activity.timeStamp}
+                    />
+                  ))}
+                </tbody>
+              </CustomerTable>
+            )}
+          </CustomerContainer>
+        ) : (
+          <CustomerContainer>
+            <header>
+              <div className="title">
+                <h2>All Customers</h2>
+                <h3>Active Members</h3>
+              </div>
 
-            <tbody>
-              <tr>
+              <Options>
+                <InputContainer>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                      stroke="#7E7E7E"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M21 21L16.65 16.65"
+                      stroke="#7E7E7E"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    value={query}
+                    onChange={(e) => {
+                      setQuery(e.currentTarget.value);
+                      console.log(query);
+                    }}
+                  />
+                </InputContainer>
+
+                <Select
+                  options={options}
+                  defaultValue={{
+                    value: "customers",
+                    label: "Sort by: Customers",
+                  }}
+                  styles={customStyles}
+                  components={{ IndicatorSeparator: () => null }}
+                />
+              </Options>
+            </header>
+            {isError.status && isError.code === 404 ? (
+              <div>
+                <h3>{isError.message}</h3>
+              </div>
+            ) : (
+              <CustomerTable>
+                <thead>
+                  <tr>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {data.map((users) => (
+                    <Users
+                      key={users._id}
+                      userName={users.name}
+                      email={users.email}
+                      phone={users.phone}
+                      role={users.role}
+                      country={users.country}
+                      handleUser={handelUser}
+                    />
+                  ))}
+
+                  {/* <tr>
                 <td>Jane Cooper</td>
                 <td>Food</td>
                 <td>0101111111111111</td>
@@ -331,10 +468,12 @@ export default function Customers() {
                 <td>
                   <span className="status active">Inactive</span>
                 </td>
-              </tr>
-            </tbody>
-          </CustomerTable>
-          <Footer>
+              </tr> */}
+                </tbody>
+              </CustomerTable>
+            )}
+
+            {/* <Footer>
             <p>
               Showing data <span className="start">1</span> to{" "}
               <span className="end">8</span> of{" "}
@@ -379,9 +518,49 @@ export default function Customers() {
                 </svg>
               </Link>
             </Pagination>
-          </Footer>
-        </CustomerContainer>
+          </Footer> */}
+          </CustomerContainer>
+        )}
       </Container>
     </>
+  );
+}
+
+// eslint-disable-next-line react/prop-types
+function Users({ userName, email, phone, role, handleUser }) {
+  return (
+    <tr>
+      <td>{userName}</td>
+      <td>
+        <a
+          className="link"
+          onClick={(e) => {
+            handleUser(e);
+          }}
+        >
+          {email}
+        </a>
+      </td>
+      <td>{phone}</td>
+      <td>{role}</td>
+      <td>
+        <span className="status active">Active</span>
+      </td>
+    </tr>
+  );
+}
+
+// eslint-disable-next-line react/prop-types
+function Activity({ userName, activityType, details, time }) {
+  return (
+    <tr>
+      <td>{userName}</td>
+      <td>{activityType}</td>
+      <td>{details}</td>
+      <td>{time}</td>
+      <td>
+        <span className="status active">Active</span>
+      </td>
+    </tr>
   );
 }

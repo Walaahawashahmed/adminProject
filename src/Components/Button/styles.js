@@ -4,7 +4,7 @@ export const Button = styled.button`
   padding: 25px;
   border-radius: 5px;
   border: none;
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.bgcolor};
   font-size: 16px;
   font-weight: 600;
   color: ${(props) => props.color};
@@ -12,6 +12,6 @@ export const Button = styled.button`
   transition: background-color 400ms;
   cursor: pointer;
   &:hover {
-    background-color: ${(props) => props.hoverBgColor};
+    background-color: ${(props) => props.hoverbgcolor};
   }
 `;
