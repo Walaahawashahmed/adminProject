@@ -43,6 +43,13 @@ export const InputContainer = styled.div`
       font-size: 16px;
     }
   }
+  .backButton {
+    cursor: pointer;
+    display: flex;
+  }
+  .backButton:hover {
+    padding: 1px;
+  }
 `;
 
 export const customStyles = {
