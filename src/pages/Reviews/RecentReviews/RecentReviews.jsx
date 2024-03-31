@@ -1,15 +1,32 @@
-import React from "react";
-import cardImg from '../../../assets/prfle nav.jpg';
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "animate.css";
-import'./recentAndCards.css';
-import Card from '../Card/card';
-
+import "./recentAndCards.css";
+import { getLocalStorage } from "../../../Services/LocalStorage";
+import Card from "../Card/card";
+import axios from "axios";
 
 export default function RecentReviews() {
-  
+  const userToken = getLocalStorage("userToken");
+  const [data, setData] = useState([]);
+  async function getReviews() {
+    try {
+      const respones = await axios.get(
+        "http://localhost:3011/admin/getreports",
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      console.log(respones);
+      setData(respones.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getReviews();
+  }, []);
   return (
     <>
       <div>
@@ -30,14 +47,14 @@ export default function RecentReviews() {
       </div>
       <div className="container">
         <div className="row">
-         
-          <Card/>
-          <Card/>
-          <Card/>
-          <Card/>
-          <Card/>
-          <Card/>
-          
+          {data.map((review) => (
+            <Card
+              key={review._id}
+              reason={review.reason}
+              _id={review._id}
+              getReviews={getReviews}
+            />
+          ))}
         </div>
       </div>
     </>
