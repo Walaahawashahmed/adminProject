@@ -21,6 +21,13 @@ export default function Sidebar() {
               Requests
             </NavLink>
           </li>
+
+          <li>
+            <NavLink to="/Dashboard/reviews">
+              <RequestIcon fill={"black"} />
+             Reviews
+            </NavLink>
+          </li>
         </ul>
 
         <UserSwitcher>
