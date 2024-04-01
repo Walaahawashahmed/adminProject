@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 import {
   Container,
@@ -41,6 +42,24 @@ export default function Requests() {
       .catch((err) => {
         console.log(err);
       });
+    if (data === "rejected") {
+      const { value: text } = await Swal.fire({
+        input: "textarea",
+        inputLabel: "Message",
+        inputPlaceholder: "Type your message here...",
+        inputAttributes: {
+          "aria-label": "Type your message here",
+        },
+        showCancelButton: false,
+      });
+      if (text) {
+        Swal.fire({
+          title: "Done!",
+          text: "Your reason has been sent.",
+          icon: "success",
+        });
+      }
+    }
   }
   async function getAllRequests() {
     try {
