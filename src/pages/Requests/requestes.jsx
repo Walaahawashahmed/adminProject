@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
 import {
@@ -20,6 +21,27 @@ export default function Requests() {
   const [data, setData] = useState([]);
   const userToken = getLocalStorage("userToken");
 
+  async function manageRequest(response, id) {
+    console.log(`${response}${id}`);
+    const data =
+      response === "Reject"
+        ? `${response.toLowerCase()}ed`
+        : `${response.toLowerCase()}d`;
+    console.log(data);
+
+    await axios({
+      method: "put",
+      url: `http://localhost:3011/admin/managebusinesses/${id}`,
+      data: { status: data },
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   async function getAllRequests() {
     try {
       const response = await axios.get("http://localhost:3011/admin", {
@@ -91,6 +113,8 @@ export default function Requests() {
                   country={business.Country}
                   category={business.category}
                   attachment={business.attachment}
+                  manageRequest={manageRequest}
+                  id={business._id}
                 />
               ))}
               {/* <tr>
@@ -133,7 +157,14 @@ export default function Requests() {
   );
 }
 // eslint-disable-next-line react/prop-types
-function Allrequests({ businessName, country, category, attachment }) {
+function Allrequests({
+  businessName,
+  country,
+  category,
+  attachment,
+  manageRequest,
+  id,
+}) {
   return (
     <tr>
       <td>{businessName}</td>
@@ -150,8 +181,22 @@ function Allrequests({ businessName, country, category, attachment }) {
         </a>
       </td>
       <td>
-        <button className="btn btn-approve">Approve</button>
-        <button className="btn btn-delete">Reject</button>
+        <button
+          onClick={(event) => {
+            manageRequest(event.target.innerText, id);
+          }}
+          className="btn btn-approve "
+        >
+          Accepte
+        </button>
+        <button
+          onClick={(event) => {
+            manageRequest(event.target.innerText, id);
+          }}
+          className="btn btn-delete"
+        >
+          Reject
+        </button>
       </td>
     </tr>
   );

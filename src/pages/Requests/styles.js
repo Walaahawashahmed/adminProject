@@ -1,4 +1,3 @@
-import { redirect } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -110,6 +109,12 @@ export const CustomerTable = styled.table`
   .btn-approve {
     background-color: rgba(173, 255, 186, 0.25);
     color: #27c001;
+  }
+  .btn-approve:hover {
+    opacity: 0.8;
+  }
+  .btn-delete:hover {
+    opacity: 0.8;
   }
 
   .btn-delete {
