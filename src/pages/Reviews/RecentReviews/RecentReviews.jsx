@@ -47,11 +47,14 @@ export default function RecentReviews() {
       </div>
       <div className="container">
         <div className="row">
-          {data.map((review) => (
+          {data.map((report) => (
             <Card
-              key={review._id}
-              reason={review.reason}
-              _id={review._id}
+              key={report._id}
+              reason={report.reason}
+              businessName={report.businessName}
+              customerName={report.customerName}
+              review={report.review}
+              _id={report._id}
               getReviews={getReviews}
             />
           ))}

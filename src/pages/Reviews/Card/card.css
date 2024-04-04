@@ -1,3 +1,10 @@
-.cardName{
-    background-color:#b58c67;
+.cardName {
+  background-color: #b58c67;
+}
+.title {
+  color: #5c4f4faf;
+}
+.report {
+  width: 350px;
+  height: 330px;
 }

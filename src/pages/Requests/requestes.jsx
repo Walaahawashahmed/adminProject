@@ -66,8 +66,7 @@ export default function Requests() {
       const response = await axios.get("http://localhost:3011/admin", {
         headers: { Authorization: `Bearer ${userToken}` },
       });
-      console.log(response);
-      setData(response.data.data);
+      setData(response.data.businesses);
       console.log(data);
     } catch (err) {
       console.log(err);
@@ -132,6 +131,8 @@ export default function Requests() {
                   country={business.Country}
                   category={business.category}
                   attachment={business.attachment}
+                  status={business.status}
+                  address={business.address}
                   manageRequest={manageRequest}
                   id={business._id}
                 />
@@ -181,6 +182,8 @@ function Allrequests({
   country,
   category,
   attachment,
+  status,
+  address,
   manageRequest,
   id,
 }) {
@@ -188,7 +191,7 @@ function Allrequests({
     <tr>
       <td>{businessName}</td>
       <td>{country}</td>
-      <td>1234 Some Street Name, City...</td>
+      <td>{address}</td>
       <td>{category}</td>
       <td>
         <a
@@ -199,8 +202,9 @@ function Allrequests({
           license
         </a>
       </td>
-      <td>
+      <td className="button">
         <button
+          disabled={status === "pending" ? false : true}
           onClick={(event) => {
             manageRequest(event.target.innerText, id);
           }}
@@ -209,6 +213,7 @@ function Allrequests({
           Accepte
         </button>
         <button
+          disabled={status === "pending" ? false : true}
           onClick={(event) => {
             manageRequest(event.target.innerText, id);
           }}
