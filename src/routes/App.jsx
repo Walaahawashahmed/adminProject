@@ -15,6 +15,7 @@ import Requests from "../pages/Requests/requestes.jsx";
 import Dashboard from "../Components/Dashboard/index.jsx";
 import { MantineProvider } from "@mantine/core";
 import RecentReviews from "../pages/Reviews/RecentReviews/RecentReviews.jsx";
+import RecentBusiness from "../pages/Business/RecentBusiness/recentBusiness.jsx";
 
 
 
@@ -34,6 +35,7 @@ function App() {
         { path: "customers", element: <Customers /> },
         { path: "requests", element: <Requests /> },
         { path: "reviews", element: <RecentReviews/> },
+        { path: "business", element: <RecentBusiness/> },
       ],
     },
     { path: "login", element: <Login /> },

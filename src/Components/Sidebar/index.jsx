@@ -28,6 +28,13 @@ export default function Sidebar() {
              Reviews
             </NavLink>
           </li>
+
+          <li>
+            <NavLink to="/Dashboard/Business">
+              <RequestIcon fill={"black"} />
+             Business
+            </NavLink>
+          </li>
         </ul>
 
         <UserSwitcher>
