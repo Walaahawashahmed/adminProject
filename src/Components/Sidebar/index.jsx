@@ -3,6 +3,18 @@ import UserIcon from "../Icons/UserIcon";
 import RequestIcon from "../Icons/RequestIcon";
 import profileImage from "../../assets/profile.png";
 import { SidebarContainer, UserSwitcher } from "./styles";
+import {  StyledLink} from "../../Components/CommonStyles";
+
+function logout() {
+ Login()
+  alert('Logged out successfully!')
+  
+    }
+
+
+
+
+
 export default function Sidebar() {
   return (
     <>
@@ -37,12 +49,17 @@ export default function Sidebar() {
           </li>
         </ul>
 
+        
+
         <UserSwitcher>
-          <img src={profileImage} alt="User Name Profile Image" />
+       
 
           <div className="info">
-            <span className="name">Evano</span>
-            <span className="title">Project Manager</span>
+         
+          <StyledLink className="bg-black text-white" to="/login">Login!</StyledLink>
+          <br />
+          <br />
+          <StyledLink className="bg-black text-white" to="/signup">Create Sub Admin!</StyledLink>
           </div>
 
           <div className="arrow">

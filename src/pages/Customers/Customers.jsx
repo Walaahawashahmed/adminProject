@@ -94,7 +94,7 @@ export default function Customers() {
     <>
       <Container>
         <Header>
-          <h2>Hello Admin 👋🏻,</h2>
+          
           {/* <InputContainer>
             <svg
               width="24"
@@ -122,100 +122,7 @@ export default function Customers() {
             <input type="text" placeholder="Search" />
           </InputContainer> */}
         </Header>
-        <Statistics>
-          <Card>
-            <Icon>
-              <img src={totalCustomersIcon} />
-            </Icon>
-            <Content>
-              <h3>Total Customers</h3>
-              <span>5,423</span>
-              <div>
-                <svg
-                  width="14"
-                  height="15"
-                  viewBox="0 0 14 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7 14L7 2"
-                    stroke="#EEEEEE"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M1.16669 7.00002L7.00002 1.16669L12.8334 7.00002"
-                    stroke="#EEEEEE"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                <h5>
-                  <span>16%</span> this month
-                </h5>
-              </div>
-            </Content>
-          </Card>
-
-          <Card>
-            <Icon>
-              <img src={profileTickIcon} />
-            </Icon>
-            <Content>
-              <h3>Members</h3>
-              <span>1,893</span>
-              <div className="decrease">
-                <svg
-                  width="14"
-                  height="15"
-                  viewBox="0 0 14 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7 14L7 2"
-                    stroke="#EEEEEE"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M1.16669 7.00002L7.00002 1.16669L12.8334 7.00002"
-                    stroke="#EEEEEE"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                <h5>
-                  <span>1%</span> this month
-                </h5>
-              </div>
-            </Content>
-          </Card>
-
-          <Card>
-            <Icon>
-              <img src={monitorIcon} />
-            </Icon>
-            <Content>
-              <h3>Active Now</h3>
-              <span>189</span>
-              <ActiveMembers>
-                <img src={member1} />
-                <img src={member2} />
-                <img src={member3} />
-                <img src={member4} />
-                <img src={member5} />
-              </ActiveMembers>
-            </Content>
-          </Card>
-        </Statistics>
+        
         {active ? (
           <CustomerContainer>
             <header>

@@ -132,7 +132,7 @@ export default function Login() {
                 </Button>
                 <p>
                   Dont have an account?{" "}
-                  <StyledLink to="/signup">sign up</StyledLink>
+                  {/* <StyledLink to="/signup">sign up</StyledLink> */}
                 </p>
               </LoginForm>
             </ContentWrapper>

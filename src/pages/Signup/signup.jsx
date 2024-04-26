@@ -23,13 +23,13 @@ export default function Signup() {
         <Container>
           <BodyWrapper>
             <ContentWrapper>
-              <FormHeading>Get Started</FormHeading>
+              <FormHeading>Create Sub Admin</FormHeading>
               <SignupForm>
                 <div className="name">
                   <label htmlFor="first_name">Full Name</label>
                   <div>
                     <Input type="text" name="first_name" id="first_name" />
-                    <Input type="text" name="last_name" id="last_name" />
+                   
                   </div>
                 </div>
                 <div className="email">
@@ -42,15 +42,12 @@ export default function Signup() {
                   <Input type="password" name="password" id="password" />
                 </div>
 
-                <Options>
-                  <div className="remember">
-                    <label htmlFor="remember">
-                      <Input type="checkbox" id="remember" />
-                      <CustomCheckbox />
-                      Accept All terms and Conditions
-                    </label>
-                  </div>
-                </Options>
+                <div className="password">
+                  <label htmlFor="password">Confirm Password</label>
+                  <Input type="password" name="password" id="password" />
+                </div>
+
+
 
                 <Button bgColor="#b58c67" color="#fff" hoverBgColor="#a57a55">
                   Sign Up
