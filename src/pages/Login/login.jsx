@@ -128,7 +128,7 @@ export default function Login() {
                   color="#fff"
                   hoverbgcolor="#a57a55"
                 >
-                  Sign in
+                  Login
                 </Button>
                 <p>
                   Dont have an account?{" "}

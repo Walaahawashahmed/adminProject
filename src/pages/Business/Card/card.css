@@ -1,7 +1,22 @@
-.cardName{
-    background-color:#b58c67;
+.cardName {
+  background-color: #b58c67;
 }
 
 .styled-span {
-    color:black;
+  color: black;
+}
+.accepted {
+  color: green;
+}
+.rejected {
+  color: red;
+}
+.businessInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.info {
+  display: flex;
+  justify-content: start;
 }

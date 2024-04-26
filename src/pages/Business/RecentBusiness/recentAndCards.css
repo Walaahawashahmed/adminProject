@@ -1,51 +1,55 @@
-.input-search{
-    background-color:#3b3b3b ;
-    color: #fff;
-    border-radius: 10px;
-    padding: 10px;
-    width: fit-content;
-  }
-  .input-search input{
-    background-color: transparent;
-    border: none;
-    outline: none;
-    min-width: 180px !important;
-    max-width: 400px !important;
-    color: #fff;
-  }
-  .del-icon-card{
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    color: #fff;
-    cursor: pointer;
-  }
-  .card-img{
-    width: 70px !important;
-    height: 70px !important;
-    border-radius: 50% !important;
-    border: 3px solid #ccc;
-  
-  }
-  .fixed-nav{
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 9999999999;
-  }
-  .after-sidebar{
-    position: relative;
-    left: 250px;
-  
-  }
-  .delete-popup {
-    width: fit-content;
-    padding: 5px 20px;
-    border-radius: 10px;
-    color: #fff;
-    position: absolute;
-    right: 10px;
-    top: 35px;
-    animation-duration: .5s !important; 
-  }
+.input-search {
+  background-color: #3b3b3b;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  width: fit-content;
+}
+.input-search input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  min-width: 180px !important;
+  max-width: 400px !important;
+  color: #fff;
+}
+.del-icon-card {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: #fff;
+  cursor: pointer;
+}
+.card-img {
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50% !important;
+  border: 3px solid #ccc;
+}
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 9999999999;
+}
+.after-sidebar {
+  position: relative;
+  left: 250px;
+}
+.delete-popup {
+  width: fit-content;
+  padding: 5px 20px;
+  border-radius: 10px;
+  color: #fff;
+  position: absolute;
+  right: 10px;
+  top: 35px;
+  animation-duration: 0.5s !important;
+}
+.err {
+  color: #fff;
+  display: flex;
+
+  justify-content: center;
+}

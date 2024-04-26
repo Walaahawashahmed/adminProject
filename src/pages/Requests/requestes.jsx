@@ -36,8 +36,8 @@ export default function Requests() {
       data: { status: data },
       headers: { Authorization: `Bearer ${userToken}` },
     })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        getAllRequests();
       })
       .catch((err) => {
         console.log(err);
