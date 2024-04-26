@@ -3,15 +3,35 @@ import cardImg from '../../../assets/prfle nav.jpg';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'animate.css';
 import Swal from 'sweetalert2'
-import "./card.css"
+import { getLocalStorage } from "../../../Services/LocalStorage";
+import "./card.css";
+import axios from "axios";
 
 
-export default function Card() {
+export default function Card({data, getAllBusinesses}) {
     let [deletePopUp,setdeletePopUp] = useState(false)
+    const userToken = getLocalStorage("userToken");
     
     let delOpenClose = ()=>{
       setdeletePopUp(!deletePopUp)
     }
+    async function deleteBusiness() {
+      try {
+        const respones = await axios.delete(
+          `http://localhost:3011/admin/deleteBusiness/${data._id}`,
+          { headers: { Authorization: `Bearer ${userToken}` } }
+        );
+        getAllBusinesses()
+        console.log(respones);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+
+
+
+
     function confirmDelete(){
       Swal.fire({
         title: "Are you sure?",
@@ -22,6 +42,7 @@ export default function Card() {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
+        deleteBusiness()
         if (result.isConfirmed) {
           Swal.fire({
             title: "Deleted!",
@@ -52,10 +73,10 @@ export default function Card() {
               <i  class="fa-solid fa-ellipsis-vertical del-icon-card" onClick={delOpenClose}></i>
               <img src={cardImg} className="card-img"  alt="" />
               <h4 className="text-white">Leticia Kutch</h4>
-              <h6 className="text-white"><span class="styled-span">Country: </span>fvsd</h6>
-              <h6 className="text-white"><span class="styled-span">Category: </span>fvsd</h6>
+              <h6 className="text-white"><span class="styled-span">Country: </span>{data.Country}</h6>
+              <h6 className="text-white"><span class="styled-span">Category: </span>{data.category}</h6>
               <h6 className="text-white"><span class="styled-span">Work time: </span>fvsd</h6>
-              <h6 className="text-white"><span class="styled-span">Days: </span>fvsd</h6>
+              <h6 className="text-white"><span class="styled-span">Days: </span>{data.days.map((day)=>(`${day}`))}</h6>
 
               {/* <p className="lead color-semi-white">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et a quos velit vitae dolor repudiandae.</p> */}
               

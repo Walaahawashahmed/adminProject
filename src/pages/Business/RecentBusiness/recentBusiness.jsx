@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'animate.css';
+import { getLocalStorage } from "../../../Services/LocalStorage";
 import'./recentAndCards.css';
 import Card from '../Card/card';
+import axios from "axios";
 
 export default function RecentBusiness() {
-  
+  const [data , setData]= useState([])
+  const userToken = getLocalStorage("userToken");
+ async function getAllBusiness(){
+    await axios.get('http://localhost:3011/admin/getallbusinesses',
+    { headers: { Authorization: `Bearer ${userToken}` } })
+    .then((res)=>
+    {console.log(res)
+      setData(res.data.businesses)})
+    .catch((error)=>{console.log(error)})
+  }
+
+  useEffect(() => {
+    getAllBusiness();
+  }, []);
   return (
     <>
       <div>
@@ -29,12 +44,8 @@ export default function RecentBusiness() {
       <div className="container">
         <div className="row">
          
-          <Card/>
-          <Card/>
-          <Card/>
-          <Card/>
-          <Card/>
-          <Card/>
+         {data.map((business)=>( <Card data={business}  getAllBusinesses={ getAllBusiness}/>))}
+          
           
         </div>
       </div>
