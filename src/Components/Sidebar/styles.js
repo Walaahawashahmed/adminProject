@@ -63,6 +63,7 @@ export const SidebarContainer = styled.aside`
 
 export const UserSwitcher = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   padding: 0.5em;
   cursor: pointer;

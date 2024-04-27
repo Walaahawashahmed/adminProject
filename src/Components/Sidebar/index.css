@@ -1,0 +1,20 @@
+.options {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+.logout:hover {
+  color: red;
+  opacity: 100%;
+  font-size: large;
+}
+.logout {
+  opacity: 80%;
+}
+.subadmin {
+  opacity: 80%;
+}
+.subadmin:hover {
+  opacity: 100%;
+  font-size: large;
+}

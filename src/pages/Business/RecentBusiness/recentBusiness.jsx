@@ -42,10 +42,7 @@ export default function RecentBusiness() {
   return (
     <>
       <div>
-        <div className="header-recent-views d-flex flex-wrap justify-content-between ">
-          <h2 className="text-white fw-bold">
-            Hello <span>Walaa</span>{" "}
-          </h2>
+        <div className="header-recent-views d-flex flex-wrap justify-content-end ">
           <div className="input-search">
             <label htmlFor="searchInput" className="me-2">
               <i class="fa-solid fa-magnifying-glass"></i>

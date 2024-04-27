@@ -230,17 +230,18 @@ export const CustomerTable = styled.table`
   }
 
   .status {
-    display: inline-block;
-    width: 100%;
     padding: 5px 10px;
     color: #fff;
+    width: 100%;
     border-radius: 5px;
     text-align: center;
+    border: none;
+    padding-block: 8px;
   }
 
   .active {
-    background-color: rgba(173, 255, 186, 0.4);
-    color: #27c001;
+    background-color: rgba(255, 197, 197, 0.25);
+    color: #df0404;
   }
 
   .inactive {

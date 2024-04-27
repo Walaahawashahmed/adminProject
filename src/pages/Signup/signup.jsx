@@ -1,4 +1,5 @@
 import imageSrc from "../../assets/signup.png";
+import { useForm } from "react-hook-form";
 import {
   CustomCheckbox,
   Image,
@@ -15,41 +16,112 @@ import {
 import { SignupForm } from "./styles";
 import { Button } from "../../Components/Button/styles";
 import { Input } from "../../Components/Input/styles";
+import axios from "axios";
+import { getLocalStorage } from "../../Services/LocalStorage";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const userToken = getLocalStorage("userToken");
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
+
+  async function onSubmit(data) {
+    console.log(userToken);
+    console.log(data);
+    await axios({
+      method: "post",
+      url: "http://localhost:3011/admin",
+      data: {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        passwordConfirm: data.confirmPassword,
+        role: "subAdmin",
+      },
+      headers: { Authorization: `Bearer ${userToken}` },
+    })
+      .then((res) => {
+        console.log(res);
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <>
       <Wrapper>
         <Container>
           <BodyWrapper>
             <ContentWrapper>
-              <FormHeading>Create Sub Admin</FormHeading>
-              <SignupForm>
+              <FormHeading style={{ marginTop: "10px" }}>
+                Create Sub Admin
+              </FormHeading>
+              <SignupForm onSubmit={handleSubmit(onSubmit)}>
                 <div className="name">
                   <label htmlFor="first_name">Full Name</label>
                   <div>
-                    <Input type="text" name="first_name" id="first_name" />
-                   
+                    <Input
+                      required
+                      type="text"
+                      name="email"
+                      id="email"
+                      {...register("name", {
+                        required: "name is required",
+                      })}
+                    />
                   </div>
                 </div>
                 <div className="email">
                   <label htmlFor="email">Email</label>
-                  <Input type="email" name="email" id="email" />
+                  <Input
+                    required
+                    type="email"
+                    name="email"
+                    id="email"
+                    {...register("email", {
+                      required: "Email is required",
+                    })}
+                  />
                 </div>
 
                 <div className="password">
                   <label htmlFor="password">Password</label>
-                  <Input type="password" name="password" id="password" />
+                  <Input
+                    required
+                    type="password"
+                    name="password"
+                    id="password"
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                  />
                 </div>
 
                 <div className="password">
                   <label htmlFor="password">Confirm Password</label>
-                  <Input type="password" name="password" id="password" />
+                  <Input
+                    required
+                    type="password"
+                    name="password"
+                    id="password"
+                    {...register("confirmPassword", {
+                      required: "Password is required",
+                    })}
+                  />
                 </div>
 
-
-
-                <Button bgColor="#b58c67" color="#fff" hoverBgColor="#a57a55">
+                <Button
+                  disabled={isSubmitting}
+                  type="submit"
+                  bgcolor="#b58c67"
+                  color="#fff"
+                  hoverbgcolor="#a57a55"
+                >
                   Sign Up
                 </Button>
                 <p>

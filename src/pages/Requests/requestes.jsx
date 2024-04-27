@@ -79,7 +79,6 @@ export default function Requests() {
     <>
       <Container>
         <Header>
-          <h2>Hello Walaa 👋🏻,</h2>
           <InputContainer>
             <svg
               width="24"

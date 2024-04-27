@@ -1,34 +1,36 @@
+/* eslint-disable react/prop-types */
 import {
-  ActiveMembers,
-  Card,
+  // ActiveMembers,
+  // Card,
   Container,
-  Content,
+  // Content,
   CustomerContainer,
   CustomerTable,
   // Footer,
   Header,
-  Icon,
+  // Icon,
   InputContainer,
   Options,
   // Pagination,
-  Statistics,
-  customStyles,
+  // Statistics,
+  // customStyles,
 } from "./styles";
-import totalCustomersIcon from "../../assets/icons/total-customers.svg";
-import monitorIcon from "../../assets/icons/monitor.svg";
-import profileTickIcon from "../../assets/icons/profile-tick.svg";
-import member1 from "../../assets/members/1.png";
-import member2 from "../../assets/members/2.png";
-import member3 from "../../assets/members/3.png";
-import member4 from "../../assets/members/4.png";
-import member5 from "../../assets/members/5.png";
+// import totalCustomersIcon from "../../assets/icons/total-customers.svg";
+// import monitorIcon from "../../assets/icons/monitor.svg";
+// import profileTickIcon from "../../assets/icons/profile-tick.svg";
+// import member1 from "../../assets/members/1.png";
+// import member2 from "../../assets/members/2.png";
+// import member3 from "../../assets/members/3.png";
+// import member4 from "../../assets/members/4.png";
+// import member5 from "../../assets/members/5.png";
 
-import Select from "react-select";
+// import Select from "react-select";
 
 // import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getLocalStorage } from "../../Services/LocalStorage";
+import Swal from "sweetalert2";
 
 export default function Customers() {
   const [query, setQuery] = useState("");
@@ -41,11 +43,6 @@ export default function Customers() {
   const [data2, setData2] = useState([]);
   const [active, setActive] = useState(false);
   const userToken = getLocalStorage("userToken");
-  const options = [
-    { value: "customers", label: "Sort by: Customers" },
-    { value: "country", label: "Sort by: Country" },
-    { value: "status", label: "Sort by: status" },
-  ];
 
   async function handelUser(e) {
     e.preventDefault();
@@ -82,6 +79,38 @@ export default function Customers() {
       });
     }
   }
+  async function deleteUser(id) {
+    try {
+      const respones = await axios.delete(
+        `http://localhost:3011/admin/deleteUsers/${id}`,
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      console.log(respones);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  function confirmDelete(id) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(id);
+        searchUser();
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  }
   useEffect(() => {
     // debounce the search and clean up after unmount
     const timeout = setTimeout(() => {
@@ -94,7 +123,6 @@ export default function Customers() {
     <>
       <Container>
         <Header>
-          
           {/* <InputContainer>
             <svg
               width="24"
@@ -122,7 +150,7 @@ export default function Customers() {
             <input type="text" placeholder="Search" />
           </InputContainer> */}
         </Header>
-        
+
         {active ? (
           <CustomerContainer>
             <header>
@@ -187,8 +215,8 @@ export default function Customers() {
           <CustomerContainer>
             <header>
               <div className="title">
-                <h2>All Customers</h2>
-                <h3>Active Members</h3>
+                <h2>Users</h2>
+                <h3>All Members in the system</h3>
               </div>
 
               <Options>
@@ -226,16 +254,6 @@ export default function Customers() {
                     }}
                   />
                 </InputContainer>
-
-                <Select
-                  options={options}
-                  defaultValue={{
-                    value: "customers",
-                    label: "Sort by: Customers",
-                  }}
-                  styles={customStyles}
-                  components={{ IndicatorSeparator: () => null }}
-                />
               </Options>
             </header>
             {isError.status && isError.code === 404 ? (
@@ -258,6 +276,8 @@ export default function Customers() {
                   {data.map((users) => (
                     <Users
                       key={users._id}
+                      confirmDelete={confirmDelete}
+                      id={users._id}
                       userName={users.name}
                       email={users.email}
                       phone={users.phone}
@@ -433,8 +453,15 @@ export default function Customers() {
   );
 }
 
-// eslint-disable-next-line react/prop-types
-function Users({ userName, email, phone, role, handleUser }) {
+function Users({
+  userName,
+  email,
+  phone,
+  role,
+  handleUser,
+  id,
+  confirmDelete,
+}) {
   return (
     <tr>
       <td>{userName}</td>
@@ -451,7 +478,9 @@ function Users({ userName, email, phone, role, handleUser }) {
       <td>{phone}</td>
       <td>{role}</td>
       <td>
-        <span className="status active">Active</span>
+        <button className="status active" onClick={() => confirmDelete(id)}>
+          Delete
+        </button>
       </td>
     </tr>
   );

@@ -1,21 +1,18 @@
 import { NavLink } from "react-router-dom";
 import UserIcon from "../Icons/UserIcon";
 import RequestIcon from "../Icons/RequestIcon";
-import profileImage from "../../assets/profile.png";
-import { SidebarContainer, UserSwitcher } from "./styles";
-import {  StyledLink} from "../../Components/CommonStyles";
-
-function logout() {
- Login()
-  alert('Logged out successfully!')
-  
-    }
-
-
-
-
+import { SidebarContainer } from "./styles";
+import { StyledLink } from "../../Components/CommonStyles";
+import "./index.css";
+import { useNavigate } from "react-router-dom";
+import { removeLocalStorage } from "../../Services/LocalStorage";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  function logout() {
+    removeLocalStorage("userToken");
+    navigate("/login");
+  }
   return (
     <>
       <SidebarContainer>
@@ -23,7 +20,7 @@ export default function Sidebar() {
           <li>
             <NavLink to="/Dashboard/customers">
               <UserIcon fill={"black"} />
-              Customers
+              Users
             </NavLink>
           </li>
 
@@ -37,45 +34,26 @@ export default function Sidebar() {
           <li>
             <NavLink to="/Dashboard/reviews">
               <RequestIcon fill={"black"} />
-             Reviews
+              Reviews
             </NavLink>
           </li>
 
           <li>
             <NavLink to="/Dashboard/Business">
               <RequestIcon fill={"black"} />
-             Business
+              Business
             </NavLink>
           </li>
         </ul>
 
-        
-
-        <UserSwitcher>
-       
-
-          <div className="info">
-         
-          <StyledLink className="bg-black text-white" to="/login">Login!</StyledLink>
-          <br />
-          <br />
-          <StyledLink className="bg-black text-white" to="/signup">Create Sub Admin!</StyledLink>
-          </div>
-
-          <div className="arrow">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-chevron-down"
-            >
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </div>
-        </UserSwitcher>
+        <div className="options">
+          <StyledLink className="logout" onClick={logout}>
+            Logout
+          </StyledLink>
+          <StyledLink className="subadmin" to="/signup">
+            Create Sub Admin
+          </StyledLink>
+        </div>
       </SidebarContainer>
     </>
   );
