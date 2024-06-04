@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import cardImg from "../../../assets/prfle nav.jpg";
+import { useEffect } from "react";
+import cardImg from "../../../assets/market.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 import Swal from "sweetalert2";
@@ -9,12 +9,7 @@ import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
 export default function Card({ data, getAllBusinesses }) {
-  let [deletePopUp, setdeletePopUp] = useState(false);
   const userToken = getLocalStorage("userToken");
-
-  let delOpenClose = () => {
-    setdeletePopUp(!deletePopUp);
-  };
   async function deleteBusiness() {
     try {
       const respones = await axios.delete(
@@ -38,8 +33,8 @@ export default function Card({ data, getAllBusinesses }) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      deleteBusiness();
       if (result.isConfirmed) {
+        deleteBusiness();
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",
@@ -64,45 +59,38 @@ export default function Card({ data, getAllBusinesses }) {
   }, []);
   return (
     <>
-      <div className="col-md-4 p-2">
-        <div className="position-relative light-gray-bg-color p-4 rounded-4 text-center cardName">
-          <i
-            class="fa-solid fa-ellipsis-vertical del-icon-card"
-            onClick={delOpenClose}
-          ></i>
+      <div className="col-md-3 p-2">
+        <div className="card">
           <img
-            src={data.logo ? `http://localhost:3011/${data.logo}` : cardImg}
-            className="card-img"
-            alt=""
+            className="card-img-top"
+            src={data.logo[0] ? `http://localhost:3011/${data.logo[0]}` : cardImg}
+            alt={data.businessName}
           />
-          <h4 className="text-white">{data.businessName}</h4>
-          <div className="businessInfo">
-            <div className="info">
-              <h6 className="text-white info">
-                <span class="styled-span">Category: </span>
-                {data.category}
-              </h6>
-            </div>
-            <div className="info">
-              <h6
-                className={
-                  data.status === "accepted"
-                    ? " accepted"
-                    : data.status === "rejected"
-                    ? " rejected"
-                    : "text-white"
-                }
-              >
-                <span class="styled-span">Status: </span>
-                {data.status === "pending"
-                  ? `${data.status}...`
-                  : `${data.status}`}
-              </h6>
-            </div>
-            <div className="info">
-              <h6 className="text-white">
-                <span class="styled-span">Rating: </span>
-                {data.totalRate}{" "}
+          <div className="card-body">
+            <h5 className="card-title">{data.businessName}</h5>
+            <p className="card-text">
+              <div>
+                <b>Status:</b>{" "}
+                <span
+                  className={
+                    "badge" +
+                    ` ${
+                      data.status === "accepted"
+                        ? "bg-success"
+                        : data.status === "rejected"
+                        ? "bg-danger"
+                        : "bg-secondary"
+                    }`
+                  }
+                >
+                  {data.status}
+                </span>
+              </div>
+              <div>
+                <b>Category:</b> {data.category}
+              </div>
+              <div>
+                <b>Rating:</b> {data.totalRate}{" "}
                 <svg
                   style={{ marker: "none" }}
                   xmlns="http://www.w3.org/2000/svg"
@@ -119,19 +107,12 @@ export default function Card({ data, getAllBusinesses }) {
                     transform="matrix(.04574 0 0 .04561 68.85 -40.34)"
                   ></path>
                 </svg>
-              </h6>
-            </div>
+              </div>
+            </p>
+            <button className="btn btn-danger w-100" onClick={confirmDelete}>
+              Delete
+            </button>
           </div>
-          {/* <p className="lead color-semi-white">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et a quos velit vitae dolor repudiandae.</p> */}
-
-          {deletePopUp ? (
-            <div className="delete-popup bg-brown animate__animated animate__fadeInDown">
-              <button className="btn" onClick={confirmDelete}>
-                <i class="fa-solid fa-trash me-2"></i>
-                Delete
-              </button>
-            </div>
-          ) : null}
         </div>
       </div>
     </>
