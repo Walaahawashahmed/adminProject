@@ -6,6 +6,7 @@ import { StyledLink } from "../../Components/CommonStyles";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import { removeLocalStorage } from "../../Services/LocalStorage";
+import logo from "../../assets/local-linker-logo.svg";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -17,6 +18,25 @@ export default function Sidebar() {
     <>
       <SidebarContainer>
         <ul>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "1rem",
+              padding: "1rem",
+            }}
+          >
+            <img
+              src={logo}
+              alt="logo"
+              style={{
+                width: "50px",
+                height: "50px",
+              }}
+            />
+            <h1 className="fs-4">Local Linker</h1>
+          </div>
           <li>
             <NavLink to="/Dashboard/customers">
               <UserIcon fill={"black"} />
