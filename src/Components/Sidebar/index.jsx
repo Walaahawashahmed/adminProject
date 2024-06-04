@@ -44,6 +44,12 @@ export default function Sidebar() {
               Business
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/Dashboard/Categories">
+              <RequestIcon fill={"black"} />
+              Categories
+            </NavLink>
+          </li>
         </ul>
 
         <div className="options">

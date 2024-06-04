@@ -16,9 +16,7 @@ import Dashboard from "../Components/Dashboard/index.jsx";
 import { MantineProvider } from "@mantine/core";
 import RecentReviews from "../pages/Reviews/RecentReviews/RecentReviews.jsx";
 import RecentBusiness from "../pages/Business/RecentBusiness/recentBusiness.jsx";
-
-
-
+import Categories from "../pages/Categories/Categories.jsx";
 
 function App() {
   const routes = createBrowserRouter([
@@ -34,8 +32,9 @@ function App() {
         { index: true, element: <Navigate replace to="customers" /> },
         { path: "customers", element: <Customers /> },
         { path: "requests", element: <Requests /> },
-        { path: "reviews", element: <RecentReviews/> },
-        { path: "business", element: <RecentBusiness/> },
+        { path: "reviews", element: <RecentReviews /> },
+        { path: "business", element: <RecentBusiness /> },
+        { path: "categories", element: <Categories /> },
       ],
     },
     { path: "login", element: <Login /> },
