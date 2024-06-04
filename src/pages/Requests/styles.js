@@ -60,7 +60,7 @@ export const CustomerContainer = styled.section`
       margin: 0;
       font-size: 14px;
       font-weight: 400;
-      color: #b58c67;
+      color: #15AABF;
     }
   }
 `;

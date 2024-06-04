@@ -30,7 +30,7 @@ export const ContentWrapper = styled.div`
 
 export const MediaHalf = styled.div`
   width: 50%;
-  background-image: linear-gradient(#b58c67, #271500);
+  background-image: linear-gradient(#15AABF, #ffffff);
   display: flex;
   flex-direction: column;
   justify-content: center;

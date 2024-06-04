@@ -124,9 +124,9 @@ export default function Login() {
                 <Button
                   disabled={isSubmitting}
                   type="submit"
-                  bgcolor="#b58c67"
+                  bgcolor="#15AABF"
                   color="#fff"
-                  hoverbgcolor="#a57a55"
+                  hoverbgcolor="#53e5f8"
                 >
                   Login
                 </Button>

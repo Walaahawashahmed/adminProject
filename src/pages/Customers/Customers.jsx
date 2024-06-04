@@ -215,7 +215,7 @@ export default function Customers() {
           <CustomerContainer>
             <header>
               <div className="title">
-                <h2>Users</h2>
+                <h2 className="text-light">Users</h2>
                 <h3>All Members in the system</h3>
               </div>
 

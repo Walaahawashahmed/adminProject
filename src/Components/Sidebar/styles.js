@@ -28,20 +28,20 @@ export const SidebarContainer = styled.aside`
       text-decoration: none;
       font-size: 15px;
       font-weight: 600;
-      color: #9197b3;
+      color: #ffffff;
       border-radius: 8px;
       transition: background-color 400ms, color 400ms;
 
       .fill {
-        fill: #9197b3;
+        fill: #ffffff;
       }
 
       .stroke {
-        stroke: #9197b3;
+        stroke: #ffffff;
       }
 
       &.active {
-        background-color: #b58c67;
+        background-color: #15AABF;
         color: #181818;
       }
 

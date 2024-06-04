@@ -110,7 +110,7 @@ export const Icon = styled.div`
   height: 84px;
   padding: 10px;
   border-radius: 50%;
-  background-image: linear-gradient(#b58c67, #271500);
+  background-image: linear-gradient(#15AABF, #f0f0f0);
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -199,7 +199,7 @@ export const CustomerContainer = styled.section`
       margin: 0;
       font-size: 14px;
       font-weight: 400;
-      color: #b58c67;
+      color: #15AABF;
     }
   }
 `;
@@ -221,7 +221,7 @@ export const CustomerTable = styled.table`
   }
 
   .link:hover {
-    text-decoration: underline #b58c67;
+    text-decoration: underline #15AABF;
     cursor: pointer;
   }
 
@@ -271,8 +271,8 @@ export const Pagination = styled.div`
   }
 
   a.active {
-    background-color: #b58c67;
-    border-color: #b58c67;
+    background-color: #15AABF;
+    border-color: #252525;
     color: #fff;
   }
 

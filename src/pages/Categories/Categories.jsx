@@ -73,14 +73,14 @@ export default function Categories() {
             }}
           >
             <input
-              className="form-control text-light bg-secondary border-0 focus-ring focus-ring-light"
+              className="form-control bg-light border-0 focus-ring focus-ring-light"
               type="text"
               placeholder="Category Name"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               required
             />
-            <button className="btn btn-light" type="submit">
+            <button className="btn btn-lg btn-outline-light" type="submit">
               Add
             </button>
           </form>

@@ -31,7 +31,7 @@ export default function ForgetPassword() {
                   <Input type="email" name="email" id="email" />
                 </div>
 
-                <Button bgColor="#b58c67" color="#fff" hoverBgColor="#a57a55">
+                <Button bgColor="#15AABF" color="#fff" hoverBgColor="#53e5f8">
                   Send!
                 </Button>
                 <p>
