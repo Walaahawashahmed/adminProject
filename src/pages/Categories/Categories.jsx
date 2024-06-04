@@ -62,7 +62,7 @@ export default function Categories() {
 
   return (
     <div>
-      <h1>Categories</h1>
+      <h1 className="fw-bolder text-white text-center my-5">Categories</h1>
       <div className="container">
         <div>
           <form
