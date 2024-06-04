@@ -12,7 +12,7 @@ import axios from "axios";
 export default function Card({
   reason,
   customerName,
-  businessName,
+  status,
   review,
   _id,
   getReviews,
@@ -71,23 +71,41 @@ export default function Card({
   }, []);
   return (
     <>
-      <div className="col-md-4 p-2 ">
-        <div className="report position-relative light-gray-bg-color p-4 rounded-4 text-center cardName">
+      <div className="col-md-4 p-2">
+        <div className="report position-relative bg-light p-4 rounded-2 cardName">
           <i
             class="fa-solid fa-ellipsis-vertical del-icon-card"
             onClick={delOpenClose}
           ></i>
-          <img src={warn} className="card-img" alt="" />
-          <h4 className="text-white">{businessName}</h4>
-          <p className="color-semi-white">
-            <b className="title">Reason:</b> {reason}
+          <div className="w-100 d-flex align-items-center justify-content-center mb-2">
+            <img src={warn} className="card-img" alt="" />
+          </div>
+          <p className="text-dark">
+            <b>Reason:</b> <span className="text-dark">{reason}</span>
           </p>
-          <p className="color-semi-white">
-            <b className="title">Customer name:</b> {customerName}
+          <p className="text-dark">
+            <b>Customer name:</b> <span>{customerName}</span>
           </p>
-          <p className="color-semi-white">
-            <b className="title">Reported Review:</b> {review}
+          <p className="text-dark">
+            <b>Reported Review:</b> <span>{review}</span>
           </p>
+          <div className="text-dark">
+            <b>Status:</b>{" "}
+            <span
+              className={
+                "badge" +
+                ` ${
+                  status === "accepted"
+                    ? "bg-success"
+                    : status === "rejected"
+                    ? "bg-danger"
+                    : "bg-secondary"
+                }`
+              }
+            >
+              {status}
+            </span>
+          </div>
 
           {deletePopUp ? (
             <div className="delete-popup bg-brown animate__animated animate__fadeInDown">

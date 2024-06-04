@@ -48,7 +48,7 @@ export default function RecentReviews() {
             <Card
               key={report._id}
               reason={report.reason}
-              businessName={report.businessName}
+              status={report.status}
               customerName={report.customerName}
               review={report.review}
               _id={report._id}
