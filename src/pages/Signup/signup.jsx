@@ -19,6 +19,7 @@ import { Input } from "../../Components/Input/styles";
 import axios from "axios";
 import { getLocalStorage } from "../../Services/LocalStorage";
 import { useNavigate } from "react-router-dom";
+import LocalLinkerLogoComponent from "../../assets/localLinkerLogoComponent";
 
 export default function Signup() {
   const userToken = getLocalStorage("userToken");
@@ -120,7 +121,7 @@ export default function Signup() {
                   type="submit"
                   bgcolor="#15AABF"
                   color="#fff"
-                  hoverbgcolor="#53e5f8"
+                  hoverbgcolor="#249dad"
                 >
                   Sign Up
                 </Button>
@@ -133,11 +134,12 @@ export default function Signup() {
           </BodyWrapper>
 
           <MediaHalf>
-            <Image src={imageSrc}></Image>
-            <Paragraph>
-              You don't build a business, you build the people, then people
-              build the business.
-            </Paragraph>
+            <div className="w-100 d-flex flex-column justify-content-center align-items-center">
+              <div className="w-50">
+                <LocalLinkerLogoComponent color={"#ffffff"} />
+              </div>
+              <h1 className="display-1 fw-bold">Local Linker</h1>
+            </div>
           </MediaHalf>
         </Container>
       </Wrapper>

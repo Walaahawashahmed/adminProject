@@ -12,6 +12,7 @@ import {
 import { Button } from "../../Components/Button/styles";
 import { Input } from "../../Components/Input/styles";
 import { ForgetPasswordForm, Heading, Hint } from "./styles";
+import LocalLinkerLogoComponent from "../../assets/localLinkerLogoComponent";
 
 export default function ForgetPassword() {
   return (
@@ -31,7 +32,12 @@ export default function ForgetPassword() {
                   <Input type="email" name="email" id="email" />
                 </div>
 
-                <Button bgColor="#15AABF" color="#fff" hoverBgColor="#53e5f8">
+                <Button
+                  type="submit"
+                  bgcolor="#15AABF"
+                  color="#fff"
+                  hoverbgcolor="#249dad"
+                >
                   Send!
                 </Button>
                 <p>
@@ -43,11 +49,12 @@ export default function ForgetPassword() {
           </BodyWrapper>
 
           <MediaHalf>
-            <Image src={imageSrc}></Image>
-            <Paragraph>
-              You dont build a business, you build the people, then people build
-              the business.
-            </Paragraph>
+            <div className="w-100 d-flex flex-column justify-content-center align-items-center">
+              <div className="w-50">
+                <LocalLinkerLogoComponent color={"#ffffff"} />
+              </div>
+              <h1 className="display-1 fw-bold">Local Linker</h1>
+            </div>
           </MediaHalf>
         </Container>
       </Wrapper>

@@ -1,4 +1,4 @@
-import imageSrc from "../../assets/login.png";
+import logo from "../../assets/local-linker-logo.svg";
 import { useForm } from "react-hook-form";
 import { notifications } from "@mantine/notifications";
 import { IconAlertSquare, IconSquareCheck } from "@tabler/icons-react";
@@ -21,6 +21,7 @@ import { Input } from "../../Components/Input/styles";
 import axios from "axios";
 import { getLocalStorage, setLocalStorage } from "../../Services/LocalStorage";
 import { useNavigate } from "react-router-dom";
+import LocalLinkerLogoComponent from "../../assets/localLinkerLogoComponent";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -126,24 +127,25 @@ export default function Login() {
                   type="submit"
                   bgcolor="#15AABF"
                   color="#fff"
-                  hoverbgcolor="#53e5f8"
+                  hoverbgcolor="#249dad"
                 >
                   Login
                 </Button>
                 <p>
                   Dont have an account?{" "}
-                  {/* <StyledLink to="/signup">sign up</StyledLink> */}
+                  <StyledLink to="/signup">sign up</StyledLink>
                 </p>
               </LoginForm>
             </ContentWrapper>
           </BodyWrapper>
 
           <MediaHalf>
-            <Image src={imageSrc}></Image>
-            <Paragraph>
-              You dont build a business, you build the people, then people build
-              the business.
-            </Paragraph>
+            <div className="w-100 d-flex flex-column justify-content-center align-items-center">
+              <div className="w-50">
+                <LocalLinkerLogoComponent color={"#ffffff"} />
+              </div>
+              <h1 className="display-1 fw-bold">Local Linker</h1>
+            </div>
           </MediaHalf>
         </Container>
       </Wrapper>
