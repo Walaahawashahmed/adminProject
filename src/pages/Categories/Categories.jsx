@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../Services/LocalStorage";
 import axios from "axios";
 import { useDisclosure } from "@mantine/hooks";
+import { Box, Button, Group, Modal, Table, Text, Title } from "@mantine/core";
+import { IconPlus, IconTrash } from "@tabler/icons-react";
 
 export default function Categories() {
   const userToken = getLocalStorage("userToken");
@@ -60,102 +62,102 @@ export default function Categories() {
     getCategories();
   }, []);
 
+  const rows = data.map((category) => (
+    <Table.Tr key={category._id}>
+      <Table.Td>{category.name}</Table.Td>
+      <Table.Td>
+        <img src={category.image} alt={category.name} />
+      </Table.Td>
+      <Table.Td>
+        <img src={category.icon} alt={category.name} />
+      </Table.Td>
+      <Table.Td align="end">
+        <Button
+          color="red.9"
+          leftSection={<IconTrash size={20} />}
+          onClick={() => {
+            setCategoryToDelete(category._id);
+            setCategoryToDeleteName(category.name);
+            open();
+          }}
+        >
+          Delete
+        </Button>
+      </Table.Td>
+    </Table.Tr>
+  ));
+
   return (
-    <div>
-      <h1 className="fw-bolder text-white text-center my-5">Categories</h1>
-      <div className="container">
-        <div>
-          <form
-            className="py-2 d-flex gap-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-              addCategory();
+    <>
+      <Box
+        style={{
+          backgroundColor: "#ffffff15",
+          borderRadius: 15,
+          padding: "20px",
+          width: "100%",
+        }}
+      >
+        <Box>
+          <Title order={1} className="fw-bolder text-white text-center my-5">
+            Categories
+          </Title>
+          <Box className="w-100 d-flex justify-content-end mb-3">
+            <Button
+              style={{
+                backgroundColor: "#15AABF",
+              }}
+              rightSection={<IconPlus size={20} />}
+            >
+              Add Category
+            </Button>
+          </Box>
+          <Table
+            styles={{
+              thead: {
+                color: "#15AABF",
+              },
+            }}
+            className="fs-6"
+            verticalSpacing="lg"
+          >
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>Category Name</Table.Th>
+                <Table.Th>Image</Table.Th>
+                <Table.Th>Icon</Table.Th>
+                <Table.Th></Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
+          </Table>
+        </Box>
+      </Box>
+
+      <Modal
+        opened={opened}
+        onClose={close}
+        title={<Title order={3}>Delete Category</Title>}
+        size="lg"
+      >
+        <Text className="pt-2 pb-4">
+          Are you sure you want to delete <b>{categoryToDeleteName}</b>?
+        </Text>
+        <Group justify="end">
+          <Button
+            color="gray"
+            onClick={() => {
+              setCategoryToDelete(null);
+              setCategoryToDeleteName("");
+              close();
             }}
           >
-            <input
-              className="form-control bg-light border-0 focus-ring focus-ring-light"
-              type="text"
-              placeholder="Category Name"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              required
-            />
-            <button className="btn btn-lg btn-outline-light" type="submit">
-              Add
-            </button>
-          </form>
-        </div>
-        <div className="row">
-          {data.map((category) => (
-            <div
-              className="py-2 d-flex justify-content-between align-items-center border-bottom border-secondary"
-              key={category._id}
-            >
-              <p>{category.name}</p>
-              <button
-                className="btn btn-danger"
-                onClick={() => {
-                  setCategoryToDelete(category._id);
-                  setCategoryToDeleteName(category.name);
-                  open();
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div
-        className={`modal fade ${opened ? "show" : ""}`}
-        id="confirmDeleteModal"
-        tabIndex="-1"
-        aria-labelledby="confirmDeleteModalLable"
-        aria-hidden={!opened}
-        style={{ display: opened ? "block" : "none" }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1
-                className="modal-title fs-5 text-dark"
-                id="confirmDeleteModalLabel"
-              >
-                Confirm Deletion
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={close}
-              ></button>
-            </div>
-            <div className="modal-body text-dark">
-              Are you sure you want to delete the <b>{categoryToDeleteName}</b>{" "}
-              category?
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-                onClick={close}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={deleteCategory}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            Cancel
+          </Button>
+          <Button color="red.8" onClick={deleteCategory}>
+            Delete
+          </Button>
+        </Group>
+      </Modal>
+    </>
   );
 }
