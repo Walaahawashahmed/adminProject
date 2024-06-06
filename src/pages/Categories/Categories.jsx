@@ -91,7 +91,7 @@ export default function Categories() {
       categoryImage.append("image", addCategoryForm.values.image);
 
       const categoryIcon = new FormData();
-      categoryIcon.append("", addCategoryForm.values.icon);
+      categoryIcon.append("icon", addCategoryForm.values.icon);
 
       try {
         await axios.post(

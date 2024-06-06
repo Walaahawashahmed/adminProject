@@ -74,7 +74,7 @@ export default function Card({
       <div className="col-md-4 p-2">
         <div className="report position-relative bg-light p-4 rounded-2 cardName">
           <i
-            class="fa-solid fa-ellipsis-vertical del-icon-card"
+            class="fa-solid fa-ellipsis-vertical del-icon-card text-black"
             onClick={delOpenClose}
           ></i>
           <div className="w-100 d-flex align-items-center justify-content-center mb-2">
@@ -110,7 +110,7 @@ export default function Card({
           {deletePopUp ? (
             <div className="delete-popup bg-brown animate__animated animate__fadeInDown">
               <button className="btn" onClick={confirmDelete}>
-                <i class="fa-solid fa-trash me-2"></i>
+                <i class="fa-solid fa-trash me-2 "></i>
                 Delete
               </button>
             </div>
