@@ -17,7 +17,7 @@ export default function RecentReviews() {
         "http://localhost:3011/admin/getreports",
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
-      console.log(respones);
+      console.log(respones.data.data);
       setData(respones.data.data);
     } catch (err) {
       console.log(err);
@@ -30,14 +30,6 @@ export default function RecentReviews() {
   return (
     <>
       <div>
-        <div className="header-recent-views d-flex flex-wrap justify-content-end ">
-          <div className="input-search">
-            <label htmlFor="searchInput" className="me-2">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </label>
-            <input type="text" id="searchInput" placeholder="Search" />
-          </div>
-        </div>
         <h1 className="fw-bolder text-white text-center mt-5">
           Recent Reviews
         </h1>
@@ -52,6 +44,7 @@ export default function RecentReviews() {
               customerName={report.customerName}
               review={report.review}
               _id={report._id}
+              ownerId={report.ownerID}
               getReviews={getReviews}
             />
           ))}
