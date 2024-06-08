@@ -21,19 +21,12 @@ export default function Requests() {
   // ];
   const [data, setData] = useState([]);
   const userToken = getLocalStorage("userToken");
-
-  async function manageRequest(response, id) {
-    console.log(`${response}${id}`);
-    const data =
-      response === "Reject"
-        ? `${response.toLowerCase()}ed`
-        : `${response.toLowerCase()}d`;
-    console.log(data);
-
+  async function accept(id) {
+    console.log(`${id}`);
     await axios({
       method: "put",
       url: `http://localhost:3011/admin/managebusinesses/${id}`,
-      data: { status: data },
+      data: { status: "accepted" },
       headers: { Authorization: `Bearer ${userToken}` },
     })
       .then(() => {
@@ -42,23 +35,38 @@ export default function Requests() {
       .catch((err) => {
         console.log(err);
       });
-    if (data === "rejected") {
-      const { value: text } = await Swal.fire({
-        input: "textarea",
-        inputLabel: "Message",
-        inputPlaceholder: "Type your message here...",
-        inputAttributes: {
-          "aria-label": "Type your message here",
-        },
-        showCancelButton: false,
-      });
-      if (text) {
-        Swal.fire({
-          title: "Done!",
-          text: "Your reason has been sent.",
-          icon: "success",
+  }
+  async function reject(id) {
+    console.log(`${id}`);
+    const { value: text } = await Swal.fire({
+      input: "textarea",
+      inputLabel: "Message",
+      inputPlaceholder: "Type your message here...",
+      inputAttributes: {
+        "aria-label": "Type your message here",
+      },
+      showCancelButton: false,
+    });
+    if (text) {
+      await axios({
+        method: "put",
+        url: `http://localhost:3011/admin/managebusinesses/${id}`,
+        data: { status: "rejected", rejectionMessage: text },
+        headers: { Authorization: `Bearer ${userToken}` },
+      })
+        .then((res) => {
+          console.log(res);
+          getAllRequests();
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      }
+
+      Swal.fire({
+        title: "Done!",
+        text: "Your reason has been sent.",
+        icon: "success",
+      });
     }
   }
   async function getAllRequests() {
@@ -67,7 +75,7 @@ export default function Requests() {
         headers: { Authorization: `Bearer ${userToken}` },
       });
       setData(response.data.businesses);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -132,7 +140,8 @@ export default function Requests() {
                   attachment={business.attachment}
                   status={business.status}
                   address={business.address}
-                  manageRequest={manageRequest}
+                  accept={accept}
+                  reject={reject}
                   id={business._id}
                 />
               ))}
@@ -183,7 +192,8 @@ function Allrequests({
   attachment,
   status,
   address,
-  manageRequest,
+  accept,
+  reject,
   id,
 }) {
   return (
@@ -204,8 +214,8 @@ function Allrequests({
       <td className="button">
         <button
           disabled={status === "pending" ? false : true}
-          onClick={(event) => {
-            manageRequest(event.target.innerText, id);
+          onClick={() => {
+            accept(id);
           }}
           className="btn btn-approve "
         >
@@ -213,8 +223,8 @@ function Allrequests({
         </button>
         <button
           disabled={status === "pending" ? false : true}
-          onClick={(event) => {
-            manageRequest(event.target.innerText, id);
+          onClick={() => {
+            reject(id);
           }}
           className="btn btn-delete"
         >
