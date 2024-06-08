@@ -15,6 +15,8 @@ export default function Card({
   status,
   review,
   _id,
+  reviewId,
+  businessId,
   getReviews,
 }) {
   const userToken = getLocalStorage("userToken");
@@ -24,14 +26,24 @@ export default function Card({
     setdeletePopUp(!deletePopUp);
   };
   async function deleteReviews() {
+    console.log(businessId, _id);
     try {
-      const respones = await axios.delete(
-        `http://localhost:3011/admin/deleteReview/${_id}`,
+      const updateRes = await axios.post(
+        `http://localhost:3011/admin/updateReportedStatus/${businessId}/${reviewId}`,
+        { Reported: "yes" },
         { headers: { Authorization: `Bearer ${userToken}` } }
       );
-      console.log(respones);
+      if (updateRes.data.success === true) {
+        const response = await axios.delete(
+          `http://localhost:3011/admin/deleteReview/${_id}`,
+          { headers: { Authorization: `Bearer ${userToken}` } }
+        );
+
+        return true;
+      }
     } catch (err) {
       console.log(err);
+      return false;
     }
   }
   function confirmDelete() {
@@ -45,12 +57,21 @@ export default function Card({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteReviews();
-        getReviews();
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
+        deleteReviews().then((res) => {
+          if (res) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            getReviews();
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong",
+              icon: "error",
+            });
+          }
         });
       }
     });

@@ -44,7 +44,8 @@ export default function RecentReviews() {
               customerName={report.customerName}
               review={report.review}
               _id={report._id}
-              ownerId={report.ownerID}
+              reviewId={report.reviewId}
+              businessId={report.businessId}
               getReviews={getReviews}
             />
           ))}
